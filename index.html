@@ -1,1 +1,512 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #202a36;
+  color: #eef2f6;
+}
+
+/* Top header */
+header {
+  min-height: 85px;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  background: #151d27;
+  border-bottom: 1px solid #303b48;
+}
+
+.logo {
+  color: #78c95b;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.greeting {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.start-button {
+  background: #174f83;
+  color: white;
+  border: 1px solid #276296;
+  border-radius: 9px;
+  padding: 15px 25px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.start-button:hover {
+  background: #1d609d;
+}
+
+/* Main scrolling page */
+main {
+  max-width: 1400px;
+  margin: auto;
+  padding: 28px;
+}
+
+.page-heading {
+  margin-bottom: 22px;
+}
+
+.page-heading h1 {
+  margin: 0 0 8px;
+  font-size: 25px;
+}
+
+.muted {
+  color: #b3becb;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Dashboard cards */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.card {
+  background: #252f3b;
+  border: 1px solid #3a4653;
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.card-heading {
+  padding: 18px 20px;
+  border-bottom: 1px solid #3a4653;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.card-content {
+  padding: 5px 20px 15px;
+}
+
+/* To-do list items */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid #394552;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  background: #304153;
+  color: #c6def4;
+  font-size: 19px;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-title {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.arrow {
+  color: #aebdca;
+  font-size: 23px;
+}
+
+/* Training section */
+.training-summary {
+  padding: 18px 0;
+  border-bottom: 1px solid #394552;
+}
+
+.summary-title {
+  font-size: 19px;
+  font-weight: bold;
+  margin: 7px 0;
+}
+
+.small-button {
+  background: #174f83;
+  color: white;
+  border: 1px solid #276296;
+  border-radius: 6px;
+  padding: 11px 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.small-button:hover {
+  background: #1d609d;
+}
+
+.subheading {
+  margin: 17px 0 6px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.session {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #394552;
+}
+
+.session:last-child {
+  border-bottom: none;
+}
+
+.check {
+  color: #7acb7b;
+  font-size: 18px;
+}
+
+/* Class progress */
+.class-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid #394552;
+}
+
+.class-icon {
+  width: 43px;
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #3b365e;
+  color: #d3caff;
+  font-size: 19px;
+}
+
+.progress {
+  padding: 18px 0 10px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.progress-label span:last-child {
+  color: #b3becb;
+}
+
+.progress-bar {
+  height: 9px;
+  background: #414d5a;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 60%;
+  background: #7acb7b;
+  border-radius: 20px;
+}
+
+/* Vocabulary */
+.word-row {
+  padding: 17px 0;
+  border-bottom: 1px solid #394552;
+}
+
+.word-row:last-child {
+  border-bottom: none;
+}
+
+.word-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+  font-size: 13px;
+}
+
+.word-label strong {
+  font-weight: bold;
+}
+
+.word-label span {
+  color: #b3becb;
+}
+
+.word-bar {
+  height: 6px;
+  background: #414d5a;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.word-fill {
+  height: 100%;
+  background: #75a9d6;
+  border-radius: 20px;
+}
+
+footer {
+  margin-top: 22px;
+  padding: 20px;
+  background: #222c37;
+  border: 1px solid #3a4653;
+  border-radius: 9px;
+  color: #b3becb;
+  font-size: 13px;
+}
+
+/* Mobile layout */
+@media (max-width: 750px) {
+  header {
+    padding: 15px;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .greeting {
+    font-size: 18px;
+  }
+
+  .spacer {
+    flex-basis: 100%;
+  }
+
+  .start-button {
+    flex: 1;
+  }
+
+  main {
+    padding: 16px 12px;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">❧ membean</div>
+  <div class="greeting">Hi, Alex</div>
+  <div class="spacer"></div>
+  <button class="start-button" onclick="startPractice()">
+    Start Practice&nbsp; →
+  </button>
+</header>
+
+<main>
+  <div class="page-heading">
+    <h1>Hi, Alex!</h1>
+    <div class="muted">
+      Here’s an overview of your learning.
+    </div>
+  </div>
+
+  <div class="dashboard">
+
+    <!-- To Do List -->
+    <section class="card">
+      <div class="card-heading">☷ &nbsp; To Do List</div>
+      <div class="card-content">
+
+        <div class="item">
+          <div class="icon">▤</div>
+          <div class="item-info">
+            <div class="item-title">Training</div>
+            <div class="muted">Complete your assigned practice</div>
+          </div>
+          <span class="arrow">›</span>
+        </div>
+
+        <div class="item">
+          <div class="icon">✓</div>
+          <div class="item-info">
+            <div class="item-title">Vocabulary Assignment</div>
+            <div class="muted">Review your assigned words</div>
+          </div>
+          <span class="arrow">›</span>
+        </div>
+
+        <div class="item">
+          <div class="icon">▧</div>
+          <div class="item-info">
+            <div class="item-title">Upcoming Work</div>
+            <div class="muted">Check quizzes and assignments</div>
+          </div>
+          <span class="arrow">›</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Training -->
+    <section class="card">
+      <div class="card-heading">
+        ◉ &nbsp; Your Training
+      </div>
+      <div class="card-content">
+
+        <div class="training-summary">
+          <div class="muted">Next Training Session</div>
+          <div class="summary-title">Ready when you are</div>
+          <div class="muted">Practice at your own pace</div>
+          <br>
+          <button class="small-button" onclick="startPractice()">
+            Start Training →
+          </button>
+        </div>
+
+        <div class="subheading">Recent Sessions</div>
+
+        <div class="session">
+          <div>
+            <strong>Recent Session</strong>
+            <div class="muted">Your latest training activity</div>
+          </div>
+          <span class="check">✓</span>
+        </div>
+
+        <div class="session">
+          <div>
+            <strong>Session History</strong>
+            <div class="muted">Review previous practice</div>
+          </div>
+          <span class="arrow">›</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Classes -->
+    <section class="card">
+      <div class="card-heading">▦ &nbsp; Your Classes</div>
+      <div class="card-content">
+
+        <div class="class-info">
+          <div class="class-icon">▤</div>
+          <div>
+            <div class="item-title">Class Progress</div>
+            <div class="muted">
+              Your assigned training expectations
+            </div>
+          </div>
+        </div>
+
+        <div class="progress">
+          <div class="progress-label">
+            <strong>Weekly Training Goal</strong>
+            <span>Example progress</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+          <p class="muted">
+            This progress bar uses sample information.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Words -->
+    <section class="card">
+      <div class="card-heading">▤ &nbsp; Words</div>
+      <div class="card-content">
+
+        <div class="word-row">
+          <div class="word-label">
+            <strong>Words in Play</strong>
+            <span>Vocabulary practice</span>
+          </div>
+          <div class="word-bar">
+            <div class="word-fill" style="width:68%"></div>
+          </div>
+        </div>
+
+        <div class="word-row">
+          <div class="word-label">
+            <strong>Words Growing Stronger</strong>
+            <span>Progress</span>
+          </div>
+          <div class="word-bar">
+            <div class="word-fill" style="width:46%"></div>
+          </div>
+        </div>
+
+        <div class="word-row">
+          <div class="word-label">
+            <strong>Current Level</strong>
+            <span>Vocabulary level</span>
+          </div>
+          <div class="word-bar">
+            <div class="word-fill" style="width:32%"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    Student dashboard mockup. The names, progress bars, and session details
+    are examples and are not connected to a real Membean account.
+  </footer>
+</main>
+
+<script>
+function startPractice() {
+  alert("This is a dashboard mockup, so practice is not connected.");
+}
+</script>
+
+</body>
+</html>

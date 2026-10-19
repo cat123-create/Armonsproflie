@@ -2,59 +2,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Membean — Student Home</title>
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: #26384d;
-      color: #edf5ff;
-      font-family: Arial, sans-serif;
-    }
-    main {
-      width: min(420px, calc(100% - 48px));
-      padding: 32px;
-      box-sizing: border-box;
-      background: #14263a;
-      border: 1px solid #2a4058;
-      border-radius: 16px;
-      text-align: center;
-    }
-    .brand {
-      color: #70cf56;
-      font-size: 36px;
-      font-weight: bold;
-      margin-bottom: 18px;
-    }
-    p {
-      color: #b4c6da;
-      line-height: 1.6;
-    }
-    a {
-      display: block;
-      margin-top: 24px;
-      padding: 15px;
-      border-radius: 9px;
-      background: #15518a;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    a:hover { background: #1b609f; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Membean Student Home</title>
+<style>
+:root {
+  --page:#26384d; --header:#0e1b2d; --sidebar:#101f32;
+  --panel:#14263a; --border:#2a4058; --text:#edf5ff;
+  --muted:#b4c6da; --blue:#15518a; --green:#6acb70;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--page); color:var(--text);
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+}
+button,a { font:inherit; }
+button { cursor:pointer; }
+.topbar {
+  min-height:100px; display:flex; align-items:center; gap:24px;
+  padding:18px 30px; background:linear-gradient(105deg,#0d1929,#111f33);
+  border-bottom:1px solid #293c52;
+}
+.brand {
+  display:flex; align-items:center; gap:10px; color:#70cf56;
+  font-size:32px; font-weight:800; white-space:nowrap;
+}
+.leaf { font-size:36px; }
+.greeting { font-size:23px; font-weight:700; }
+.spacer { flex:1; }
+.profile { font-size:24px; color:#d6e6f8; }
+.start-btn,.action {
+  display:inline-flex; justify-content:center; align-items:center; gap:12px;
+  background:var(--blue); color:white; border:0; border-radius:9px;
+  padding:15px 21px; font-weight:750; text-decoration:none;
+}
+.start-btn:hover,.action:hover { background:#1b609f; }
+.layout {
+  display:grid; grid-template-columns:245px minmax(0,1fr);
+  min-height:calc(100vh - 100px);
+}
+aside { background:var(--sidebar); padding:20px 12px; }
+.nav-item {
+  display:flex; align-items:center; gap:17px; padding:15px;
+  margin-bottom:5px; border-radius:9px; color:var(--muted);
+  text-decoration:none; font-size:17px;
+}
+.nav-item:hover,.nav-item.active { color:white; background:#1a3553; }
+.nav-icon { width:28px; text-align:center; font-size:23px; }
+main { padding:28px; min-width:0; }
+.welcome { margin-bottom:23px; }
+h1 { margin:0 0 8px; font-size:27px; }
+.muted { color:var(--muted); line-height:1.6; }
+.grid {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:20px; align-items:start;
+}
+.panel {
+  min-width:0; overflow:hidden; border:1px solid var(--border);
+  border-radius:12px; background:linear-gradient(135deg,#14263a,#112237);
+}
+.panel-head {
+  display:flex; align-items:center; gap:13px; padding:20px;
+  border-bottom:1px solid var(--border); font-size:21px; font-weight:750;
+}
+.panel-icon { color:#a8d3ff; font-size:25px; }
+.panel-body { padding:8px 20px 15px; }
+.item {
+  display:flex; align-items:center; gap:15px; padding:18px 0;
+  border-bottom:1px solid #2b4057;
+}
+.item:last-child { border-bottom:0; }
+.round-icon {
+  width:49px; height:49px; flex:0 0 49px; display:grid;
+  place-items:center; border-radius:50%; background:#233b55;
+  color:#a8d3ff; font-size:23px;
+}
+.copy { flex:1; min-width:0; }
+.item-title { font-weight:750; margin-bottom:6px; }
+.chevron { color:#a9c8e8; font-size:26px; }
+.next { padding:20px; }
+.next h2 { margin:0 0 9px; font-size:22px; }
+.next p { margin:0 0 17px; }
+.progress {
+  height:12px; overflow:hidden; border-radius:20px; background:#2b4057;
+  margin:12px 0;
+}
+.progress-fill { height:100%; width:60%; background:var(--green); }
+.notice {
+  margin-top:20px; padding:15px 18px; border-radius:9px;
+  background:#102239; color:var(--muted); line-height:1.6;
+}
+footer { color:var(--muted); font-size:12px; margin-top:25px; }
+@media(max-width:850px) {
+  .layout { grid-template-columns:1fr; }
+  aside { display:flex; overflow-x:auto; padding:8px; gap:4px; }
+  .nav-item { white-space:nowrap; padding:11px; gap:7px; }
+  .grid { grid-template-columns:1fr; }
+  main { padding:18px; }
+}
+@media(max-width:560px) {
+  .topbar { flex-wrap:wrap; padding:16px; gap:12px; }
+  .brand { font-size:25px; }
+  .greeting { font-size:18px; }
+  .spacer { flex-basis:100%; }
+  .start-btn { flex:1; }
+}
+</style>
 </head>
 <body>
-  <main>
-    <div class="brand">❧ membean</div>
-    <h1>Student Home</h1>
-    <p>Sign in to your real Membean account to open your dashboard and continue your vocabulary training.</p>
-    <a href="https://membean.com/login">
-      Sign in to Membean →
-    </a>
+<header class="topbar">
+  <div class="brand"><span class="leaf">❧</span><span>membean</span></div>
+  <div class="greeting">Hi, Student</div>
+  <div class="spacer"></div>
+  <a class="start-btn" href="https://membean.com/login">
+    Start Practice <span>➜</span>
+  </a>
+  <div class="profile" aria-label="Profile">●⌄</div>
+</header>
+
+<div class="layout">
+  <aside aria-label="Main navigation">
+    <a class="nav-item active" href="#home"><span class="nav-icon">⌂</span>Home</a>
+    <a class="nav-item" href="#words"><span class="nav-icon">◧</span>My Words</a>
+    <a class="nav-item" href="#classes"><span class="nav-icon">♟</span>Classes</a>
+    <a class="nav-item" href="#assignments"><span class="nav-icon">▤</span>Assignments</a>
+    <a class="nav-item" href="#reports"><span class="nav-icon">▥</span>Reports</a>
+    <a class="nav-item" href="#settings"><span class="nav-icon">⚙</span>Settings</a>
+  </aside>
+
+  <main id="home">
+    <section class="welcome">
+      <h1>Welcome to Membean</h1>
+      <div class="muted">Your vocabulary practice starts here.</div>
+    </section>
+
+    <div class="grid">
+      <section class="panel" id="assignments">
+        <div class="panel-head"><span class="panel-icon">▤</span>To Do List</div>
+        <div class="panel-body">
+          <a class="item" href="https://membean.com/login" style="color:inherit;text-decoration:none">
+            <div class="round-icon">◧</div>
+            <div class="copy">
+              <div class="item-title">Training</div>
+              <div class="muted">Continue your assigned vocabulary training.</div>
+            </div>
+            <span class="chevron">›</span>
+          </a>
+          <a class="item" href="https://membean.com/login" style="color:inherit;text-decoration:none">
+            <div class="round-icon">▤</div>
+            <div class="copy">
+              <div class="item-title">Assignments</div>
+              <div class="muted">Check your assigned work on Membean.</div>
+            </div>
+            <span class="chevron">›</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="panel" id="reports">
+        <div class="panel-head"><span class="panel-icon">✥</span>Your Training</div>
+        <div class="next">
+          <h2>Ready to practice?</h2>
+          <p class="muted">Sign in to your Membean account to start a real training session.</p>
+          <a class="action" href="https://membean.com/login">Sign in &amp; Practice →</a>
+          <div class="notice">
+            Your actual sessions, words, assignments, and progress are available after signing in to the official Membean website.
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="classes">
+        <div class="panel-head"><span class="panel-icon">♟</span>Your Classes</div>
+        <div class="panel-body">
+          <a class="item" href="https://membean.com/login" style="color:inherit;text-decoration:none">
+            <div class="round-icon">♟</div>
+            <div class="copy">
+              <div class="item-title">Class Information</div>
+              <div class="muted">Sign in to view your actual class details.</div>
+            </div>
+            <span class="chevron">›</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="panel" id="words">
+        <div class="panel-head"><span class="panel-icon">◧</span>Words</div>
+        <div class="panel-body">
+          <a class="item" href="https://membean.com/login" style="color:inherit;text-decoration:none">
+            <div class="round-icon">☷</div>
+            <div class="copy">
+              <div class="item-title">My Words</div>
+              <div class="muted">Open your real vocabulary list.</div>
+            </div>
+            <span class="chevron">›</span>
+          </a>
+          <a class="item" href="https://membean.com/login" style="color:inherit;text-decoration:none">
+            <div class="round-icon">▣</div>
+            <div class="copy">
+              <div class="item-title">Words in Play</div>
+              <div class="muted">Continue learning words in training.</div>
+            </div>
+            <span class="chevron">›</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="panel" id="settings">
+        <div class="panel-head"><span class="panel-icon">⚙</span>Account</div>
+        <div class="next">
+          <p class="muted">Use the official sign-in to access account settings and your saved progress.</p>
+          <a class="action" href="https://membean.com/login">Open Membean →</a>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      This page is a custom homepage. Real sign-in and training are handled securely by Membean.
+    </footer>
   </main>
+</div>
 </body>
 </html>

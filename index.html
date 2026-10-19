@@ -2,167 +2,624 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Membean Student Portal</title>
-  <style>
-    * { box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Dashboard</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f6fb;
-      color: #24344d;
-    }
+<style>
+:root {
+  --page:#202a36;
+  --header:#151d27;
+  --card:#252f3b;
+  --line:#3a4653;
+  --text:#eef2f6;
+  --muted:#b3becb;
+  --blue:#174f83;
+  --link:#a9d3f6;
+  --green:#7acb7b;
+}
+* { box-sizing:border-box; }
 
-    header {
-      background: #fff;
-      padding: 20px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px #0000000c;
-    }
+body {
+  margin:0;
+  background:var(--page);
+  color:var(--text);
+  font:15px Arial,Helvetica,sans-serif;
+}
 
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      color: #2878d0;
-    }
+.topbar {
+  min-height:86px;
+  padding:0 30px;
+  display:flex;
+  align-items:center;
+  gap:28px;
+  background:var(--header);
+  border-bottom:1px solid #303b48;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
 
-    main {
-      max-width: 850px;
-      margin: 65px auto;
-      padding: 20px;
-    }
+.brand {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:#78c95b;
+  font-size:30px;
+  font-weight:700;
+  letter-spacing:-.8px;
+}
 
-    .welcome {
-      text-align: center;
-      margin-bottom: 35px;
-    }
+.brand-mark {
+  font-size:32px;
+  transform:rotate(-25deg);
+}
 
-    .welcome h1 {
-      font-size: 34px;
-      margin-bottom: 10px;
-    }
+.greeting {
+  font-size:22px;
+  font-weight:700;
+}
 
-    .welcome p { color: #718096; }
+.spacer { flex:1; }
 
-    .card {
-      background: white;
-      padding: 35px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px #203a5c12;
-      margin-bottom: 22px;
-    }
+.start {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  min-width:220px;
+  padding:15px 23px;
+  color:white;
+  background:var(--blue);
+  border:1px solid #276296;
+  border-radius:8px;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  text-decoration:none;
+}
 
-    .card h2 { margin-top: 0; }
+.start:hover, .small:hover {
+  background:#1d609d;
+}
 
-    .button {
-      display: inline-block;
-      border: none;
-      border-radius: 9px;
-      padding: 14px 23px;
-      background: #2878d0;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      text-decoration: none;
-      cursor: pointer;
-    }
+.login-button {
+  color:#dcecff;
+  text-decoration:none;
+  font-weight:bold;
+  white-space:nowrap;
+}
 
-    .button:hover { background: #1d62ad; }
+.login-button:hover { text-decoration:underline; }
 
-    .secondary {
-      background: #eaf3ff;
-      color: #2878d0;
-    }
+.profile {
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#344355;
+  color:#e3edf7;
+}
 
-    .secondary:hover {
-      background: #d8eaff;
-    }
+main {
+  max-width:1440px;
+  margin:0 auto;
+  padding:27px 32px 48px;
+}
 
-    .note {
-      font-size: 14px;
-      color: #718096;
-      line-height: 1.6;
-    }
+.intro {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:18px;
+  margin-bottom:22px;
+}
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #8290a3;
-      font-size: 13px;
-    }
+h1 {
+  font-size:25px;
+  margin:0 0 7px;
+  font-weight:700;
+}
 
-    @media (max-width: 600px) {
-      main { margin: 30px auto; }
-      .welcome h1 { font-size: 27px; }
-      .card { padding: 24px; }
-    }
-  </style>
+.muted {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.date {
+  color:#aab7c5;
+  font-size:13px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  gap:18px;
+  align-items:start;
+}
+
+.card {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:8px;
+  overflow:hidden;
+  min-width:0;
+}
+
+.head {
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:17px 19px;
+  border-bottom:1px solid var(--line);
+  font-size:18px;
+  font-weight:700;
+}
+
+.headicon { color:#a9ccec; }
+
+.link {
+  color:var(--link);
+  font-size:13px;
+  text-decoration:none;
+  margin-left:auto;
+  font-weight:400;
+}
+
+.link:hover, .foot a:hover { text-decoration:underline; }
+
+.body { padding:4px 19px 12px; }
+
+.task {
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:17px 0;
+  border-bottom:1px solid #394552;
+}
+
+.task:last-child { border-bottom:0; }
+
+.symbol {
+  width:39px;
+  height:39px;
+  flex:0 0 39px;
+  display:grid;
+  place-items:center;
+  border-radius:7px;
+  background:#304153;
+  color:#c6def4;
+  font-size:18px;
+}
+
+.copy { flex:1; min-width:0; }
+
+.title {
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+.desc {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.4;
+}
+
+.status {
+  color:#a9c9e7;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.arrow {
+  color:#aebdca;
+  font-size:22px;
+}
+
+.summary {
+  padding:17px 0;
+  border-bottom:1px solid #394552;
+}
+
+.summaryrow {
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.summaryinfo { flex:1; }
+
+.label {
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:6px;
+}
+
+.summarytitle {
+  font-size:19px;
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+.small {
+  background:var(--blue);
+  border:1px solid #276296;
+  color:white;
+  border-radius:6px;
+  padding:10px 13px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  white-space:nowrap;
+  text-decoration:none;
+}
+
+.subhead {
+  margin:16px 0 6px;
+  font-size:13px;
+  color:#d7e0e9;
+  font-weight:700;
+}
+
+.session {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid #394552;
+}
+
+.session:last-child { border-bottom:0; }
+
+.sessionname {
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:4px;
+}
+
+.check { color:var(--green); font-size:17px; }
+
+.classentry {
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:17px 0;
+  border-bottom:1px solid #394552;
+}
+
+.classsymbol {
+  width:42px;
+  height:42px;
+  border-radius:7px;
+  display:grid;
+  place-items:center;
+  background:#3b365e;
+  color:#d3caff;
+  font-size:18px;
+}
+
+.goal { padding:17px 0 9px; }
+
+.goaltop {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.goaltop span:last-child { color:var(--muted); }
+
+.track {
+  height:9px;
+  background:#414d5a;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.fill {
+  height:100%;
+  width:60%;
+  background:var(--green);
+  border-radius:20px;
+}
+
+.level {
+  padding:15px 0;
+  border-bottom:1px solid #394552;
+}
+
+.level:last-child { border-bottom:0; }
+
+.leveltop {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:8px;
+  font-size:13px;
+}
+
+.leveltop span:first-child { font-weight:600; }
+.leveltop span:last-child { color:var(--muted); }
+
+.leveltrack {
+  height:6px;
+  border-radius:20px;
+  background:#414d5a;
+  overflow:hidden;
+}
+
+.levelfill {
+  height:100%;
+  border-radius:inherit;
+  background:#75a9d6;
+}
+
+.foot { padding:12px 0 5px; }
+
+.foot a {
+  color:var(--link);
+  text-decoration:none;
+  font-size:13px;
+}
+
+.lower-note {
+  margin-top:18px;
+  padding:18px 20px;
+  background:#222c37;
+  border:1px solid var(--line);
+  border-radius:8px;
+}
+
+.lower-note h2 {
+  margin:0 0 8px;
+  font-size:17px;
+}
+
+@media(max-width:800px) {
+  .grid { grid-template-columns:1fr; }
+  main { padding:22px 18px 35px; }
+  .brand { font-size:25px; }
+  .topbar { gap:17px; padding:0 18px; }
+  .start { min-width:175px; }
+}
+
+@media(max-width:560px) {
+  .topbar {
+    padding:14px;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .brand { font-size:23px; }
+  .brand-mark { font-size:26px; }
+  .greeting { font-size:18px; }
+  .spacer { flex-basis:100%; }
+  .start { flex:1; }
+  .profile { margin-left:auto; }
+  main { padding:16px 12px 30px; }
+  .intro {
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .date { display:none; }
+  .summaryrow {
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .task { gap:10px; }
+  .status { display:none; }
+}
+</style>
 </head>
-<body>
 
-<header>
-  <div class="logo">membean</div>
-  <a class="button" href="https://membean.com/login"
-     target="_blank" rel="noopener noreferrer">
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">❧</span>
+    <span>membean</span>
+  </div>
+
+  <div class="greeting">Hi, Alex</div>
+  <div class="spacer"></div>
+
+  <a class="login-button"
+     href="https://membean.com/login"
+     target="_blank"
+     rel="noopener noreferrer">
     Log In
   </a>
+
+  <a class="start"
+     href="https://membean.com/login"
+     target="_blank"
+     rel="noopener noreferrer">
+    Start Practice <span>→</span>
+  </a>
+
+  <div class="profile" title="Profile">●</div>
 </header>
 
-<main>
-  <section class="welcome">
-    <h1>Welcome to Membean</h1>
-    <p>Your vocabulary learning starts here.</p>
-  </section>
+<main id="top">
+  <div class="intro">
+    <div>
+      <h1>Hi, Alex!</h1>
+      <div class="muted">Here’s an overview of your learning.</div>
+    </div>
+    <div class="date">Student dashboard</div>
+  </div>
 
-  <section class="card">
-    <h2>Student Login</h2>
-    <p>
-      Sign in to your real Membean account to access your
-      student dashboard and training.
-    </p>
-    <a class="button" href="https://membean.com/login"
-       target="_blank" rel="noopener noreferrer">
-      Log In to Membean →
-    </a>
-    <p class="note">
-      Sign in using your Membean username and password, or
-      your school's Google login if available.
-    </p>
-  </section>
+  <div class="grid">
+    <section class="card" id="todo">
+      <div class="head">
+        <span class="headicon">☷</span>To Do List
+      </div>
+      <div class="body">
+        <div class="task">
+          <div class="symbol">▤</div>
+          <div class="copy">
+            <div class="title">Training</div>
+            <div class="desc">Complete your assigned practice</div>
+          </div>
+          <span class="status">To do</span>
+          <span class="arrow">›</span>
+        </div>
 
-  <section class="card">
-    <h2>Ready to train?</h2>
-    <p>
-      Open Membean to view your account and start your
-      assigned vocabulary training.
-    </p>
-    <a class="button" href="https://membean.com/login"
-       target="_blank" rel="noopener noreferrer">
-      Start Training →
-    </a>
-  </section>
+        <div class="task">
+          <div class="symbol">✓</div>
+          <div class="copy">
+            <div class="title">Vocabulary assignment</div>
+            <div class="desc">Review the words assigned by your teacher</div>
+          </div>
+          <span class="arrow">›</span>
+        </div>
 
-  <section class="card">
-    <h2>Need help?</h2>
+        <div class="task">
+          <div class="symbol">▧</div>
+          <div class="copy">
+            <div class="title">Upcoming work</div>
+            <div class="desc">Check for quizzes and writing assignments</div>
+          </div>
+          <span class="arrow">›</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="training">
+      <div class="head">
+        <span class="headicon">◉</span>
+        Your Training
+        <a class="link" href="https://membean.com/login"
+           target="_blank" rel="noopener noreferrer">View history →</a>
+      </div>
+
+      <div class="body">
+        <div class="summary">
+          <div class="summaryrow">
+            <div class="summaryinfo">
+              <div class="label">Next training session</div>
+              <div class="summarytitle">Ready when you are</div>
+              <div class="desc">Practice at your own pace</div>
+            </div>
+
+            <a class="small"
+               href="https://membean.com/login"
+               target="_blank"
+               rel="noopener noreferrer">
+              Start Training →
+            </a>
+          </div>
+        </div>
+
+        <div class="subhead">Recent Sessions</div>
+
+        <div class="session">
+          <div>
+            <div class="sessionname">Recent session</div>
+            <div class="muted">Your latest training activity</div>
+          </div>
+          <span class="check">✓</span>
+        </div>
+
+        <div class="session">
+          <div>
+            <div class="sessionname">Session history</div>
+            <div class="muted">Review your previous practice</div>
+          </div>
+          <span class="arrow">›</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="classes">
+      <div class="head">
+        <span class="headicon">▦</span>Your Classes
+      </div>
+      <div class="body">
+        <div class="classentry">
+          <div class="classsymbol">▤</div>
+          <div class="copy">
+            <div class="title">Class progress</div>
+            <div class="desc">See your assigned training expectations</div>
+          </div>
+          <a class="link" href="https://membean.com/login"
+             target="_blank" rel="noopener noreferrer">Details →</a>
+        </div>
+
+        <div class="goal">
+          <div class="goaltop">
+            <span>Weekly training goal</span>
+            <span>Example progress</span>
+          </div>
+          <div class="track"><div class="fill"></div></div>
+          <div class="desc" style="margin-top:9px">
+            Progress shown here is sample information.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="words">
+      <div class="head">
+        <span class="headicon">▤</span>Words
+      </div>
+      <div class="body">
+        <div class="level">
+          <div class="leveltop">
+            <span>Words in Play</span>
+            <span>Vocabulary practice</span>
+          </div>
+          <div class="leveltrack">
+            <div class="levelfill" style="width:68%"></div>
+          </div>
+        </div>
+
+        <div class="level">
+          <div class="leveltop">
+            <span>Words Growing Stronger</span>
+            <span>Building familiarity</span>
+          </div>
+          <div class="leveltrack">
+            <div class="levelfill" style="width:46%"></div>
+          </div>
+        </div>
+
+        <div class="level">
+          <div class="leveltop">
+            <span>Current Level</span>
+            <span>View your level</span>
+          </div>
+          <div class="leveltrack">
+            <div class="levelfill" style="width:32%"></div>
+          </div>
+        </div>
+
+        <div class="foot">
+          <a href="https://membean.com/login"
+             target="_blank" rel="noopener noreferrer">
+            View My Words →
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="lower-note" id="settings">
+    <h2>More student information</h2>
+    <div class="muted">
+      This dashboard is a visual mockup. Sign in to the official
+      Membean website to see your real assignments and progress.
+    </div>
     <p>
-      If you cannot sign in, ask your teacher for help
-      with your account.
+      <a class="small"
+         href="https://membean.com/login"
+         target="_blank" rel="noopener noreferrer">
+        Open My Membean Account →
+      </a>
     </p>
-    <a class="button secondary"
-       href="https://membean.com/login"
-       target="_blank" rel="noopener noreferrer">
-      Return to Login
-    </a>
   </section>
 </main>
-
-<footer>
-  Student portal demo · Sign in securely on the official Membean website.
-</footer>
-
 </body>
 </html>

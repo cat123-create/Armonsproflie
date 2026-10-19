@@ -3,299 +3,202 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WordQuest - Vocabulary Trainer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WordQuest Vocabulary</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#f3f6fc;color:#1b2940;font-family:Arial,sans-serif}
-header{background:white;padding:18px 5%;border-bottom:1px solid #ddd;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:24px;font-weight:bold;color:#3867e8}
-main{max-width:900px;margin:25px auto;padding:0 15px}
-.card{background:white;border:1px solid #dce3ef;border-radius:15px;padding:22px;margin-bottom:16px}
-button{background:#3867e8;color:white;border:0;padding:12px 18px;border-radius:9px;font-weight:bold;cursor:pointer}
-button:hover{filter:brightness(1.1)}
-button:disabled{opacity:.5}
-input{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #ccd5e3;border-radius:8px}
-label{font-weight:bold;font-size:14px}
-.muted{color:#6c7890;line-height:1.5}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.stat{background:#f3f6fc;padding:14px;border-radius:10px}
-.stat small{display:block;color:#6c7890}
-.stat b{font-size:24px}
-.word{font-size:clamp(35px,7vw,55px);font-weight:bold;margin:20px 0}
-.lesson{text-align:center;min-height:320px}
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px auto;max-width:650px}
-.answer{background:white;color:#1b2940;border:1px solid #ccd5e3;text-align:left;min-height:65px}
-.answer.correct{background:#e3f8ec;border-color:#21965c}
-.answer.wrong{background:#ffe9e9;border-color:#d44}
-.progress{height:9px;background:#e4eaf4;border-radius:10px;overflow:hidden;margin:10px 0}
-.progress div{height:100%;width:0;background:#3867e8}
+body{margin:0;background:#f1f5ff;color:#192642;font-family:Arial,sans-serif}
+header{background:white;padding:18px;text-align:center;font-size:25px;font-weight:bold;color:#315fe8}
+main{max-width:700px;margin:25px auto;padding:15px}
+.card{background:white;padding:24px;border-radius:16px;margin-bottom:16px;box-shadow:0 3px 15px #0001}
+button{padding:13px 18px;border:0;border-radius:9px;background:#315fe8;color:white;font-weight:bold;cursor:pointer;margin:5px}
+button:hover{opacity:.85}
+input{padding:12px;border:1px solid #ccd4e4;border-radius:8px;width:90%;max-width:400px;margin:10px 0}
 .hidden{display:none!important}
-.badge{color:#3867e8;font-weight:bold;font-size:12px;letter-spacing:1px}
-#feedback{font-weight:bold;margin:14px}
-.example{background:#f2f6ff;padding:14px;border-radius:8px;text-align:left;max-width:600px;margin:12px auto;line-height:1.6}
-@media(max-width:600px){.answers{grid-template-columns:1fr}.card{padding:16px}.stats{gap:6px}.stat{padding:9px}}
+.word{font-size:42px;font-weight:bold;margin:20px 0}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.answers button{background:#f0f4ff;color:#192642;border:1px solid #ccd4e4;min-height:60px}
+.answers button:disabled{opacity:1}
+.stats{display:flex;justify-content:space-around;gap:10px;text-align:center}
+.stats strong{font-size:24px;display:block}
+.muted{color:#68758c;line-height:1.5}
+.correct{background:#d9f8e5!important;border-color:#29965c!important}
+.wrong{background:#ffe1e1!important}
+#feedback{font-weight:bold;min-height:24px}
+@media(max-width:500px){.answers{grid-template-columns:1fr}.card{padding:17px}.word{font-size:34px}}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo">✦ WordQuest</div>
-  <div id="profileName"></div>
-</header>
-
+<header>✦ WordQuest</header>
 <main>
-<section id="auth" class="card">
-  <h1 id="authTitle">Create your profile</h1>
-  <p class="muted">Choose your name to personalize your vocabulary practice.</p>
-  <div id="signupFields">
-    <label>Your name</label>
-    <input id="name" placeholder="Your name">
-    <label>Username</label>
-    <input id="username" placeholder="Choose a username">
-    <label>Password</label>
-    <input id="password" type="password" placeholder="At least 4 characters">
-  </div>
-  <div id="loginFields" class="hidden">
-    <label>Username</label>
-    <input id="loginUser" placeholder="Your username">
-    <label>Password</label>
-    <input id="loginPass" type="password" placeholder="Your password">
-  </div>
-  <p id="authError" style="color:#c33"></p>
-  <button id="authButton" onclick="submitAuth()">Create profile & start</button>
-  <p><span id="switchText">Already have an account?</span>
-  <button class="secondary" onclick="switchAuth()">Sign in</button></p>
-  <p class="muted" style="font-size:12px">Demo accounts are stored only in this browser. This is an independent project, not connected to Membean.</p>
+<section id="welcome" class="card">
+<h1>Learn new words!</h1>
+<p class="muted">Start easy, earn XP, and unlock harder vocabulary.</p>
+<label for="player">What is your name?</label><br>
+<input id="player" placeholder="Enter your name" maxlength="30">
+<br><button id="begin">Start learning →</button>
+<p id="message" class="muted"></p>
 </section>
 
-<div id="game" class="hidden">
-  <section class="card">
-    <h1>Welcome, <span id="hello"></span>! 👋</h1>
-    <p class="muted">Practice consistently to unlock more challenging words.</p>
-    <div class="stats">
-      <div class="stat"><small>Level</small><b id="level">1</b></div>
-      <div class="stat"><small>Words mastered</small><b id="mastered">0</b></div>
-      <div class="stat"><small>XP earned</small><b id="xp">0</b></div>
-    </div>
-    <p id="levelProgress">0 / 100 XP to next level</p>
-    <div class="progress"><div id="progressBar"></div></div>
-    <button onclick="signOut()" style="background:#eaf0ff;color:#3867e8">Sign out</button>
-  </section>
-
-  <section class="card lesson">
-    <div class="badge" id="status">READY TO LEARN</div>
-    <div id="startScreen">
-      <div class="word">Ready for a challenge?</div>
-      <p class="muted">Answer 10 questions, earn XP, and build your vocabulary.</p>
-      <button onclick="startGame()">▶ Play</button>
-    </div>
-    <div id="questionScreen" class="hidden">
-      <div class="word" id="word"></div>
-      <p class="muted" id="part"></p>
-      <p>Choose the closest meaning:</p>
-      <div class="answers" id="answers"></div>
-      <div id="feedback"></div>
-      <div id="example" class="example hidden"></div>
-      <button id="next" class="hidden" onclick="nextQuestion()">Next word →</button>
-      <button onclick="endGame()" style="background:#eaf0ff;color:#3867e8">End session</button>
-    </div>
-    <div id="finishScreen" class="hidden">
-      <div class="word">Great work! 🎉</div>
-      <p id="summary" class="muted"></p>
-      <button onclick="startGame()">Play again</button>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>📚 Words to review</h2>
-    <p class="muted">Words you miss will appear here.</p>
-    <div id="reviewList">No review words yet.</div>
-  </section>
+<section id="home" class="card hidden">
+<h1>Welcome, <span id="name"></span>!</h1>
+<div class="stats">
+<div>Level<strong id="level">1</strong></div>
+<div>Words learned<strong id="learned">0</strong></div>
+<div>XP<strong id="xp">0</strong></div>
 </div>
+<p class="muted" id="progress"></p>
+<button id="play">▶ Play</button>
+<button id="rename">Change name</button>
+<button id="reset">Reset progress</button>
+</section>
+
+<section id="quiz" class="card hidden" style="text-align:center">
+<p id="number" class="muted"></p>
+<div id="word" class="word"></div>
+<p>What does this word mean?</p>
+<div id="answers" class="answers"></div>
+<p id="feedback"></p>
+<p id="example" class="muted"></p>
+<button id="next" class="hidden">Next word →</button>
+<button id="finish">Finish session</button>
+</section>
+
+<section id="done" class="card hidden" style="text-align:center">
+<h1>Great job! 🎉</h1>
+<p id="summary" class="muted"></p>
+<button id="again">Play again</button>
+<button id="back">Home</button>
+</section>
+
+<section id="review" class="card hidden">
+<h2>📚 Review these words</h2>
+<div id="reviewWords" class="muted">No words to review yet.</div>
+</section>
 </main>
-
 <script>
-const $=id=>document.getElementById(id);
-
-const WORDS=[
-["happy","feeling pleased or glad","She felt happy on her birthday.",1],
-["tiny","very small","A tiny mouse hid under the chair.",1],
-["calm","peaceful and not upset","He stayed calm during the test.",1],
-["rapid","happening very quickly","The rabbit made a rapid dash.",1],
-["assist","to help someone","I will assist you with your work.",1],
-["ancient","very old; from long ago","They explored an ancient castle.",1],
+(function(){
+"use strict";
+const words=[
+["happy","feeling pleased or glad","She was happy to see her friend.",1],
+["tiny","very small","A tiny bird sat on the fence.",1],
+["calm","peaceful and not upset","He stayed calm during the storm.",1],
+["rapid","happening very quickly","The rapid runner won the race.",1],
+["assist","to help someone","I will assist you with your homework.",1],
+["ancient","very old","They visited an ancient castle.",1],
 ["observe","to watch carefully","Scientists observe the stars.",1],
-["fragile","easily broken or damaged","Be careful with the fragile glass.",1],
-["fortunate","having good luck","We were fortunate to catch the bus.",1],
+["fragile","easily broken","The fragile glass needs care.",1],
+["fortunate","having good luck","We were fortunate to find a seat.",1],
 ["reluctant","unwilling or hesitant","She was reluctant to speak.",2],
 ["abundant","existing in large quantities","The forest has abundant wildlife.",2],
-["infer","to reach a conclusion from evidence","We can infer what happened from clues.",2],
+["infer","to reach a conclusion from clues","We can infer the answer from the evidence.",2],
 ["precise","exact and accurate","Please give a precise measurement.",2],
-["diligent","showing steady and careful effort","The diligent student practiced daily.",2],
-["inevitable","certain to happen; unavoidable","Change is inevitable.",2],
-["resilient","able to recover after difficulty","The resilient team learned from defeat.",2],
-["ambiguous","having more than one possible meaning","The ambiguous clue confused everyone.",3],
+["diligent","careful and hardworking","The diligent student studied every day.",2],
+["inevitable","certain to happen","Change is inevitable.",2],
+["resilient","able to recover after difficulty","The resilient team kept trying.",2],
+["ambiguous","having more than one possible meaning","The ambiguous clue confused us.",3],
 ["meticulous","extremely careful about details","She kept meticulous notes.",3],
-["pragmatic","focused on practical solutions","They chose a pragmatic plan.",3],
-["ubiquitous","present or found everywhere","Smartphones are ubiquitous in many cities.",3],
-["ephemeral","lasting for a very short time","The rainbow's beauty was ephemeral.",3],
-["eloquent","fluent and persuasive in speaking","His eloquent speech moved the audience.",3],
-["scrutinize","to examine very closely","Reviewers scrutinize every detail.",3],
+["pragmatic","focused on practical solutions","They chose a pragmatic solution.",3],
+["ubiquitous","found almost everywhere","Phones are ubiquitous in many cities.",3],
+["ephemeral","lasting for a short time","The rainbow was ephemeral.",3],
+["eloquent","fluent and persuasive in speaking","His eloquent speech inspired us.",3],
+["scrutinize","to examine very closely","Reviewers scrutinize each detail.",3],
 ["benevolent","kind and generous","The benevolent neighbor helped everyone.",3],
-["conundrum","a difficult problem with no easy answer","It was a conundrum.",3],
-["mitigate","to make something less severe","Trees can mitigate the effects of heat.",3],
-["arduous","requiring great effort; difficult","The arduous climb took all day.",3]
+["conundrum","a difficult problem or puzzle","The puzzle was a conundrum.",3],
+["mitigate","to make something less severe","Trees can mitigate heat.",3],
+["arduous","requiring great effort","The arduous climb took all day.",3]
 ];
-
-let accounts={};
-try{accounts=JSON.parse(localStorage.getItem("wordquestAccounts")||"{}")}catch(e){}
-let current=null,mode="signup",session=null;
-
-function saveAccounts(){
-  localStorage.setItem("wordquestAccounts",JSON.stringify(accounts));
+const $=id=>document.getElementById(id);
+const key="wordquest_pasteable_v2";
+let data={name:"",xp:0,learned:[],review:[],seen:{}},session=null;
+try{const old=JSON.parse(localStorage.getItem(key)||"null");if(old&&typeof old==="object")data=Object.assign(data,old)}catch(e){}
+function save(){try{localStorage.setItem(key,JSON.stringify(data))}catch(e){}}
+function level(){return Math.min(10,1+Math.floor(data.xp/100))}
+function difficulty(){return level()<3?1:level()<6?2:3}
+function show(id){["welcome","home","quiz","done","review"].forEach(x=>$(x).classList.toggle("hidden",x!==id))}
+function dashboard(){
+ $("name").textContent=data.name;
+ $("level").textContent=level();
+ $("learned").textContent=data.learned.length;
+ $("xp").textContent=data.xp;
+ $("progress").textContent=(data.xp%100)+" / 100 XP to the next level";
+ const box=$("reviewWords");box.replaceChildren();
+ if(!data.review.length)box.textContent="No words to review yet.";
+ data.review.forEach(w=>{
+  const item=words.find(x=>x[0]===w);if(!item)return;
+  const p=document.createElement("p");p.textContent=item[0]+": "+item[1];box.appendChild(p);
+ });
+ save();
 }
-function freshProgress(){
-  return {xp:0,mastered:[],review:[],seen:{},correct:0,total:0};
+function start(){
+ const pool=words.filter(w=>w[3]<=difficulty()&&!data.learned.includes(w[0]));
+ const queue=[];
+ data.review.forEach(w=>{const item=words.find(x=>x[0]===w);if(item&&queue.length<3&&!queue.includes(item))queue.push(item)});
+ const rest=pool.filter(w=>!queue.includes(w));
+ while(queue.length<10&&rest.length){queue.push(rest.splice(Math.floor(Math.random()*rest.length),1)[0])}
+ if(!queue.length)words.filter(w=>w[3]<=difficulty()).sort(()=>Math.random()-.5).slice(0,10).forEach(w=>queue.push(w));
+ session={queue:queue,index:0,correct:0,locked:false};
+ show("quiz");ask();
 }
-function switchAuth(){
-  mode=mode==="signup"?"login":"signup";
-  $("signupFields").classList.toggle("hidden",mode!=="signup");
-  $("loginFields").classList.toggle("hidden",mode!=="login");
-  $("authTitle").textContent=mode==="signup"?"Create your profile":"Sign in";
-  $("authButton").textContent=mode==="signup"?"Create profile & start":"Sign in";
-  $("switchText").textContent=mode==="signup"?"Already have an account?":"New here?";
-  $("authError").textContent="";
+function ask(){
+ if(session.index>=session.queue.length){finish();return}
+ const item=session.queue[session.index];session.locked=false;
+ $("number").textContent="QUESTION "+(session.index+1)+" OF "+session.queue.length+" · LEVEL "+item[3];
+ $("word").textContent=item[0];$("feedback").textContent="";$("example").textContent="";
+ $("next").classList.add("hidden");
+ const choices=[item[1]],pool=words.filter(w=>w[0]!==item[0]);
+ while(choices.length<4&&pool.length){
+  const i=Math.floor(Math.random()*pool.length),m=pool.splice(i,1)[0][1];
+  if(!choices.includes(m))choices.push(m);
+ }
+ choices.sort(()=>Math.random()-.5);
+ const box=$("answers");box.replaceChildren();
+ choices.forEach(choice=>{
+  const b=document.createElement("button");b.textContent=choice;
+  b.addEventListener("click",()=>answer(b,choice===item[1]));box.appendChild(b);
+ });
 }
-function submitAuth(){
-  let u=(mode==="signup"?$("username").value:$("loginUser").value).trim().toLowerCase();
-  let pass=mode==="signup"?$("password").value:$("loginPass").value;
-  if(mode==="signup"){
-    let name=$("name").value.trim();
-    if(!name||!u||!pass){$("authError").textContent="Fill in every field.";return}
-    if(u.length<3||pass.length<4){$("authError").textContent="Username needs 3+ characters and password 4+.";return}
-    if(accounts[u]){$("authError").textContent="Username already exists in this browser.";return}
-    accounts[u]={name,pass,progress:freshProgress()};
-    saveAccounts();
-    enter(u);
-  }else{
-    if(!accounts[u]||accounts[u].pass!==pass){
-      $("authError").textContent="Login details don't match a profile in this browser.";return;
-    }
-    enter(u);
+function answer(button,correct){
+ if(session.locked)return;session.locked=true;
+ const item=session.queue[session.index];
+ Object.keys(data.seen).includes(item[0])?data.seen[item[0]]++:data.seen[item[0]]=1;
+ [...$("answers").children].forEach(b=>{b.disabled=true;if(b.textContent===item[1])b.classList.add("correct")});
+ if(correct){
+  session.correct++;data.xp+=10+item[3]*5;
+  $("feedback").textContent="Correct! +"+(10+item[3]*5)+" XP";$("feedback").style.color="#168553";
+  if(!data.learned.includes(item[0])&&(data.seen[item[0]]>=2||Math.random()<.35)){
+   data.learned.push(item[0]);data.review=data.review.filter(w=>w!==item[0]);
   }
+ }else{
+  button.classList.add("wrong");if(!data.review.includes(item[0]))data.review.push(item[0]);
+  $("feedback").textContent="Not quite! The correct answer is highlighted."; $("feedback").style.color="#b52e36";
+ }
+ $("example").textContent="Example: "+item[2];
+ $("next").classList.remove("hidden");dashboard();
 }
-function enter(u){
-  current=u;
-  $("auth").classList.add("hidden");
-  $("game").classList.remove("hidden");
-  $("profileName").textContent="👤 "+accounts[u].name;
-  $("hello").textContent=accounts[u].name;
-  updateDashboard();
+function finish(){
+ const correct=session?session.correct:0,total=session?session.queue.length:0;session=null;
+ $("summary").textContent="You answered "+correct+" out of "+total+" questions correctly. Keep practicing to unlock harder words!";
+ dashboard();show("done");
 }
-function signOut(){
-  current=null;session=null;
-  $("game").classList.add("hidden");
-  $("auth").classList.remove("hidden");
-  $("profileName").textContent="";
-  mode="login";
-  $("signupFields").classList.add("hidden");
-  $("loginFields").classList.remove("hidden");
-  $("authTitle").textContent="Sign in";
-  $("authButton").textContent="Sign in";
-}
-function p(){return accounts[current].progress}
-function level(){return Math.min(10,1+Math.floor(p().xp/100))}
-function tier(){return level()<3?1:level()<6?2:3}
-function updateDashboard(){
-  if(!current)return;
-  $("level").textContent=level();
-  $("mastered").textContent=p().mastered.length;
-  $("xp").textContent=p().xp;
-  $("levelProgress").textContent=(p().xp%100)+" / 100 XP to next level";
-  $("progressBar").style.width=(p().xp%100)+"%";
-  $("reviewList").innerHTML=p().review.length?
-    p().review.map(w=>{let x=WORDS.find(a=>a[0]===w);return "<p><b>"+w+"</b> — "+x[1]+"</p>"}).join("")
-    :"No review words yet.";
-  saveAccounts();
-}
-function startGame(){
-  let eligible=WORDS.filter(w=>w[3]<=tier()&&!p().mastered.includes(w[0]));
-  let review=p().review.map(w=>WORDS.find(x=>x[0]===w)).filter(Boolean);
-  let queue=review.slice(0,3);
-  eligible=eligible.filter(w=>!queue.some(x=>x[0]===w[0]));
-  while(queue.length<10&&eligible.length){
-    queue.push(eligible.splice(Math.floor(Math.random()*eligible.length),1)[0]);
-  }
-  if(!queue.length)queue=WORDS.filter(w=>w[3]<=tier()).slice(0,10);
-  session={queue,at:0,correct:0,answered:false};
-  $("startScreen").classList.add("hidden");
-  $("finishScreen").classList.add("hidden");
-  $("questionScreen").classList.remove("hidden");
-  question();
-}
-function question(){
-  if(session.at>=session.queue.length){endGame();return}
-  let w=session.queue[session.at];
-  session.answered=false;
-  $("status").textContent="WORD "+(session.at+1)+" OF "+session.queue.length+" · LEVEL "+w[3];
-  $("word").textContent=w[0];
-  $("part").textContent="Vocabulary · Level "+w[3];
-  $("feedback").textContent="";
-  $("example").classList.add("hidden");
-  $("next").classList.add("hidden");
-  let choices=[w[1]];
-  let other=WORDS.filter(x=>x[0]!==w[0]);
-  while(choices.length<4&&other.length){
-    let i=Math.floor(Math.random()*other.length),x=other.splice(i,1)[0];
-    if(!choices.includes(x[1]))choices.push(x[1]);
-  }
-  choices.sort(()=>Math.random()-.5);
-  $("answers").innerHTML="";
-  choices.forEach(d=>{
-    let b=document.createElement("button");
-    b.className="answer";b.textContent=d;
-    b.onclick=()=>answer(b,d===w[1]);
-    $("answers").appendChild(b);
-  });
-}
-function answer(btn,correct){
-  if(session.answered)return;
-  session.answered=true;
-  let w=session.queue[session.at],q=p();
-  q.total++;q.seen[w[0]]=(q.seen[w[0]]||0)+1;
-  [...$("answers").children].forEach(b=>{
-    b.disabled=true;
-    if(b.textContent===w[1])b.classList.add("correct");
-  });
-  if(correct){
-    session.correct++;q.correct++;
-    let gain=10+w[3]*5;q.xp+=gain;
-    if(!q.mastered.includes(w[0])&&
-      (q.seen[w[0]]>=2||Math.random()<.35)){
-      q.mastered.push(w[0]);
-      q.review=q.review.filter(x=>x!==w[0]);
-    }
-    $("feedback").textContent="Correct! +"+gain+" XP";
-    $("feedback").style.color="#168553";
-  }else{
-    if(!q.review.includes(w[0]))q.review.push(w[0]);
-    $("feedback").textContent="Not quite — review the meaning.";
-    $("feedback").style.color="#b33";
-  }
-  $("example").innerHTML="<b>Meaning:</b> "+w[1]+"<br><br><b>Example:</b> "+w[2];
-  $("example").classList.remove("hidden");
-  $("next").classList.remove("hidden");
-  updateDashboard();
-}
-function nextQuestion(){session.at++;question()}
-function endGame(){
-  if(!session)return;
-  $("questionScreen").classList.add("hidden");
-  $("finishScreen").classList.remove("hidden");
-  $("status").textContent="SESSION COMPLETE";
-  $("summary").textContent="You answered "+session.correct+" correctly. Keep practicing to master more words!";
-  session=null;updateDashboard();
-}
+$("begin").addEventListener("click",()=>{
+ const name=$("player").value.trim();
+ if(!name){$("message").textContent="Please enter your name first.";return}
+ data.name=name;dashboard();show("home");
+});
+$("player").addEventListener("keydown",e=>{if(e.key==="Enter")$("begin").click()});
+$("play").addEventListener("click",start);
+$("again").addEventListener("click",start);
+$("back").addEventListener("click",()=>{dashboard();show("home")});
+$("next").addEventListener("click",()=>{session.index++;ask()});
+$("finish").addEventListener("click",finish);
+$("rename").addEventListener("click",()=>{show("welcome");$("player").value=data.name});
+$("reset").addEventListener("click",()=>{
+ if(confirm("Reset your saved progress?")){
+  data={name:data.name,xp:0,learned:[],review:[],seen:{}};dashboard();show("home");
+ }
+});
+if(data.name){$("player").value=data.name;$("message").textContent="Welcome back, "+data.name+". Your saved progress is ready."; $("begin").textContent="Continue →";}
+})();
 </script>
 </body>
 </html>

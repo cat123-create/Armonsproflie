@@ -3,510 +3,299 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Dashboard</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WordQuest - Vocabulary Trainer</title>
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #202a36;
-  color: #eef2f6;
-}
-
-/* Top header */
-header {
-  min-height: 85px;
-  padding: 15px 30px;
-  display: flex;
-  align-items: center;
-  gap: 25px;
-  background: #151d27;
-  border-bottom: 1px solid #303b48;
-}
-
-.logo {
-  color: #78c95b;
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.greeting {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.spacer {
-  flex: 1;
-}
-
-.start-button {
-  background: #174f83;
-  color: white;
-  border: 1px solid #276296;
-  border-radius: 9px;
-  padding: 15px 25px;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.start-button:hover {
-  background: #1d609d;
-}
-
-/* Main scrolling page */
-main {
-  max-width: 1400px;
-  margin: auto;
-  padding: 28px;
-}
-
-.page-heading {
-  margin-bottom: 22px;
-}
-
-.page-heading h1 {
-  margin: 0 0 8px;
-  font-size: 25px;
-}
-
-.muted {
-  color: #b3becb;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-/* Dashboard cards */
-.dashboard {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.card {
-  background: #252f3b;
-  border: 1px solid #3a4653;
-  border-radius: 9px;
-  overflow: hidden;
-}
-
-.card-heading {
-  padding: 18px 20px;
-  border-bottom: 1px solid #3a4653;
-  font-size: 19px;
-  font-weight: bold;
-}
-
-.card-content {
-  padding: 5px 20px 15px;
-}
-
-/* To-do list items */
-.item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 18px 0;
-  border-bottom: 1px solid #394552;
-}
-
-.item:last-child {
-  border-bottom: none;
-}
-
-.icon {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 7px;
-  background: #304153;
-  color: #c6def4;
-  font-size: 19px;
-}
-
-.item-info {
-  flex: 1;
-}
-
-.item-title {
-  font-size: 15px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.arrow {
-  color: #aebdca;
-  font-size: 23px;
-}
-
-/* Training section */
-.training-summary {
-  padding: 18px 0;
-  border-bottom: 1px solid #394552;
-}
-
-.summary-title {
-  font-size: 19px;
-  font-weight: bold;
-  margin: 7px 0;
-}
-
-.small-button {
-  background: #174f83;
-  color: white;
-  border: 1px solid #276296;
-  border-radius: 6px;
-  padding: 11px 14px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.small-button:hover {
-  background: #1d609d;
-}
-
-.subheading {
-  margin: 17px 0 6px;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.session {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #394552;
-}
-
-.session:last-child {
-  border-bottom: none;
-}
-
-.check {
-  color: #7acb7b;
-  font-size: 18px;
-}
-
-/* Class progress */
-.class-info {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 18px 0;
-  border-bottom: 1px solid #394552;
-}
-
-.class-icon {
-  width: 43px;
-  height: 43px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  background: #3b365e;
-  color: #d3caff;
-  font-size: 19px;
-}
-
-.progress {
-  padding: 18px 0 10px;
-}
-
-.progress-label {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 10px;
-  font-size: 13px;
-}
-
-.progress-label span:last-child {
-  color: #b3becb;
-}
-
-.progress-bar {
-  height: 9px;
-  background: #414d5a;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  width: 60%;
-  background: #7acb7b;
-  border-radius: 20px;
-}
-
-/* Vocabulary */
-.word-row {
-  padding: 17px 0;
-  border-bottom: 1px solid #394552;
-}
-
-.word-row:last-child {
-  border-bottom: none;
-}
-
-.word-label {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 9px;
-  font-size: 13px;
-}
-
-.word-label strong {
-  font-weight: bold;
-}
-
-.word-label span {
-  color: #b3becb;
-}
-
-.word-bar {
-  height: 6px;
-  background: #414d5a;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.word-fill {
-  height: 100%;
-  background: #75a9d6;
-  border-radius: 20px;
-}
-
-footer {
-  margin-top: 22px;
-  padding: 20px;
-  background: #222c37;
-  border: 1px solid #3a4653;
-  border-radius: 9px;
-  color: #b3becb;
-  font-size: 13px;
-}
-
-/* Mobile layout */
-@media (max-width: 750px) {
-  header {
-    padding: 15px;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    font-size: 24px;
-  }
-
-  .greeting {
-    font-size: 18px;
-  }
-
-  .spacer {
-    flex-basis: 100%;
-  }
-
-  .start-button {
-    flex: 1;
-  }
-
-  main {
-    padding: 16px 12px;
-  }
-
-  .dashboard {
-    grid-template-columns: 1fr;
-  }
-}
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6fc;color:#1b2940;font-family:Arial,sans-serif}
+header{background:white;padding:18px 5%;border-bottom:1px solid #ddd;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:24px;font-weight:bold;color:#3867e8}
+main{max-width:900px;margin:25px auto;padding:0 15px}
+.card{background:white;border:1px solid #dce3ef;border-radius:15px;padding:22px;margin-bottom:16px}
+button{background:#3867e8;color:white;border:0;padding:12px 18px;border-radius:9px;font-weight:bold;cursor:pointer}
+button:hover{filter:brightness(1.1)}
+button:disabled{opacity:.5}
+input{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #ccd5e3;border-radius:8px}
+label{font-weight:bold;font-size:14px}
+.muted{color:#6c7890;line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:#f3f6fc;padding:14px;border-radius:10px}
+.stat small{display:block;color:#6c7890}
+.stat b{font-size:24px}
+.word{font-size:clamp(35px,7vw,55px);font-weight:bold;margin:20px 0}
+.lesson{text-align:center;min-height:320px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px auto;max-width:650px}
+.answer{background:white;color:#1b2940;border:1px solid #ccd5e3;text-align:left;min-height:65px}
+.answer.correct{background:#e3f8ec;border-color:#21965c}
+.answer.wrong{background:#ffe9e9;border-color:#d44}
+.progress{height:9px;background:#e4eaf4;border-radius:10px;overflow:hidden;margin:10px 0}
+.progress div{height:100%;width:0;background:#3867e8}
+.hidden{display:none!important}
+.badge{color:#3867e8;font-weight:bold;font-size:12px;letter-spacing:1px}
+#feedback{font-weight:bold;margin:14px}
+.example{background:#f2f6ff;padding:14px;border-radius:8px;text-align:left;max-width:600px;margin:12px auto;line-height:1.6}
+@media(max-width:600px){.answers{grid-template-columns:1fr}.card{padding:16px}.stats{gap:6px}.stat{padding:9px}}
 </style>
 </head>
-
 <body>
-
 <header>
-  <div class="logo">❧ membean</div>
-  <div class="greeting">Hi, Alex</div>
-  <div class="spacer"></div>
-  <button class="start-button" onclick="startPractice()">
-    Start Practice&nbsp; →
-  </button>
+  <div class="logo">✦ WordQuest</div>
+  <div id="profileName"></div>
 </header>
 
 <main>
-  <div class="page-heading">
-    <h1>Hi, Alex!</h1>
-    <div class="muted">
-      Here’s an overview of your learning.
+<section id="auth" class="card">
+  <h1 id="authTitle">Create your profile</h1>
+  <p class="muted">Choose your name to personalize your vocabulary practice.</p>
+  <div id="signupFields">
+    <label>Your name</label>
+    <input id="name" placeholder="Your name">
+    <label>Username</label>
+    <input id="username" placeholder="Choose a username">
+    <label>Password</label>
+    <input id="password" type="password" placeholder="At least 4 characters">
+  </div>
+  <div id="loginFields" class="hidden">
+    <label>Username</label>
+    <input id="loginUser" placeholder="Your username">
+    <label>Password</label>
+    <input id="loginPass" type="password" placeholder="Your password">
+  </div>
+  <p id="authError" style="color:#c33"></p>
+  <button id="authButton" onclick="submitAuth()">Create profile & start</button>
+  <p><span id="switchText">Already have an account?</span>
+  <button class="secondary" onclick="switchAuth()">Sign in</button></p>
+  <p class="muted" style="font-size:12px">Demo accounts are stored only in this browser. This is an independent project, not connected to Membean.</p>
+</section>
+
+<div id="game" class="hidden">
+  <section class="card">
+    <h1>Welcome, <span id="hello"></span>! 👋</h1>
+    <p class="muted">Practice consistently to unlock more challenging words.</p>
+    <div class="stats">
+      <div class="stat"><small>Level</small><b id="level">1</b></div>
+      <div class="stat"><small>Words mastered</small><b id="mastered">0</b></div>
+      <div class="stat"><small>XP earned</small><b id="xp">0</b></div>
     </div>
-  </div>
+    <p id="levelProgress">0 / 100 XP to next level</p>
+    <div class="progress"><div id="progressBar"></div></div>
+    <button onclick="signOut()" style="background:#eaf0ff;color:#3867e8">Sign out</button>
+  </section>
 
-  <div class="dashboard">
+  <section class="card lesson">
+    <div class="badge" id="status">READY TO LEARN</div>
+    <div id="startScreen">
+      <div class="word">Ready for a challenge?</div>
+      <p class="muted">Answer 10 questions, earn XP, and build your vocabulary.</p>
+      <button onclick="startGame()">▶ Play</button>
+    </div>
+    <div id="questionScreen" class="hidden">
+      <div class="word" id="word"></div>
+      <p class="muted" id="part"></p>
+      <p>Choose the closest meaning:</p>
+      <div class="answers" id="answers"></div>
+      <div id="feedback"></div>
+      <div id="example" class="example hidden"></div>
+      <button id="next" class="hidden" onclick="nextQuestion()">Next word →</button>
+      <button onclick="endGame()" style="background:#eaf0ff;color:#3867e8">End session</button>
+    </div>
+    <div id="finishScreen" class="hidden">
+      <div class="word">Great work! 🎉</div>
+      <p id="summary" class="muted"></p>
+      <button onclick="startGame()">Play again</button>
+    </div>
+  </section>
 
-    <!-- To Do List -->
-    <section class="card">
-      <div class="card-heading">☷ &nbsp; To Do List</div>
-      <div class="card-content">
-
-        <div class="item">
-          <div class="icon">▤</div>
-          <div class="item-info">
-            <div class="item-title">Training</div>
-            <div class="muted">Complete your assigned practice</div>
-          </div>
-          <span class="arrow">›</span>
-        </div>
-
-        <div class="item">
-          <div class="icon">✓</div>
-          <div class="item-info">
-            <div class="item-title">Vocabulary Assignment</div>
-            <div class="muted">Review your assigned words</div>
-          </div>
-          <span class="arrow">›</span>
-        </div>
-
-        <div class="item">
-          <div class="icon">▧</div>
-          <div class="item-info">
-            <div class="item-title">Upcoming Work</div>
-            <div class="muted">Check quizzes and assignments</div>
-          </div>
-          <span class="arrow">›</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Training -->
-    <section class="card">
-      <div class="card-heading">
-        ◉ &nbsp; Your Training
-      </div>
-      <div class="card-content">
-
-        <div class="training-summary">
-          <div class="muted">Next Training Session</div>
-          <div class="summary-title">Ready when you are</div>
-          <div class="muted">Practice at your own pace</div>
-          <br>
-          <button class="small-button" onclick="startPractice()">
-            Start Training →
-          </button>
-        </div>
-
-        <div class="subheading">Recent Sessions</div>
-
-        <div class="session">
-          <div>
-            <strong>Recent Session</strong>
-            <div class="muted">Your latest training activity</div>
-          </div>
-          <span class="check">✓</span>
-        </div>
-
-        <div class="session">
-          <div>
-            <strong>Session History</strong>
-            <div class="muted">Review previous practice</div>
-          </div>
-          <span class="arrow">›</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Classes -->
-    <section class="card">
-      <div class="card-heading">▦ &nbsp; Your Classes</div>
-      <div class="card-content">
-
-        <div class="class-info">
-          <div class="class-icon">▤</div>
-          <div>
-            <div class="item-title">Class Progress</div>
-            <div class="muted">
-              Your assigned training expectations
-            </div>
-          </div>
-        </div>
-
-        <div class="progress">
-          <div class="progress-label">
-            <strong>Weekly Training Goal</strong>
-            <span>Example progress</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill"></div>
-          </div>
-          <p class="muted">
-            This progress bar uses sample information.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Words -->
-    <section class="card">
-      <div class="card-heading">▤ &nbsp; Words</div>
-      <div class="card-content">
-
-        <div class="word-row">
-          <div class="word-label">
-            <strong>Words in Play</strong>
-            <span>Vocabulary practice</span>
-          </div>
-          <div class="word-bar">
-            <div class="word-fill" style="width:68%"></div>
-          </div>
-        </div>
-
-        <div class="word-row">
-          <div class="word-label">
-            <strong>Words Growing Stronger</strong>
-            <span>Progress</span>
-          </div>
-          <div class="word-bar">
-            <div class="word-fill" style="width:46%"></div>
-          </div>
-        </div>
-
-        <div class="word-row">
-          <div class="word-label">
-            <strong>Current Level</strong>
-            <span>Vocabulary level</span>
-          </div>
-          <div class="word-bar">
-            <div class="word-fill" style="width:32%"></div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-  </div>
-
-  <footer>
-    Student dashboard mockup. The names, progress bars, and session details
-    are examples and are not connected to a real Membean account.
-  </footer>
+  <section class="card">
+    <h2>📚 Words to review</h2>
+    <p class="muted">Words you miss will appear here.</p>
+    <div id="reviewList">No review words yet.</div>
+  </section>
+</div>
 </main>
 
 <script>
-function startPractice() {
-  alert("This is a dashboard mockup, so practice is not connected.");
+const $=id=>document.getElementById(id);
+
+const WORDS=[
+["happy","feeling pleased or glad","She felt happy on her birthday.",1],
+["tiny","very small","A tiny mouse hid under the chair.",1],
+["calm","peaceful and not upset","He stayed calm during the test.",1],
+["rapid","happening very quickly","The rabbit made a rapid dash.",1],
+["assist","to help someone","I will assist you with your work.",1],
+["ancient","very old; from long ago","They explored an ancient castle.",1],
+["observe","to watch carefully","Scientists observe the stars.",1],
+["fragile","easily broken or damaged","Be careful with the fragile glass.",1],
+["fortunate","having good luck","We were fortunate to catch the bus.",1],
+["reluctant","unwilling or hesitant","She was reluctant to speak.",2],
+["abundant","existing in large quantities","The forest has abundant wildlife.",2],
+["infer","to reach a conclusion from evidence","We can infer what happened from clues.",2],
+["precise","exact and accurate","Please give a precise measurement.",2],
+["diligent","showing steady and careful effort","The diligent student practiced daily.",2],
+["inevitable","certain to happen; unavoidable","Change is inevitable.",2],
+["resilient","able to recover after difficulty","The resilient team learned from defeat.",2],
+["ambiguous","having more than one possible meaning","The ambiguous clue confused everyone.",3],
+["meticulous","extremely careful about details","She kept meticulous notes.",3],
+["pragmatic","focused on practical solutions","They chose a pragmatic plan.",3],
+["ubiquitous","present or found everywhere","Smartphones are ubiquitous in many cities.",3],
+["ephemeral","lasting for a very short time","The rainbow's beauty was ephemeral.",3],
+["eloquent","fluent and persuasive in speaking","His eloquent speech moved the audience.",3],
+["scrutinize","to examine very closely","Reviewers scrutinize every detail.",3],
+["benevolent","kind and generous","The benevolent neighbor helped everyone.",3],
+["conundrum","a difficult problem with no easy answer","It was a conundrum.",3],
+["mitigate","to make something less severe","Trees can mitigate the effects of heat.",3],
+["arduous","requiring great effort; difficult","The arduous climb took all day.",3]
+];
+
+let accounts={};
+try{accounts=JSON.parse(localStorage.getItem("wordquestAccounts")||"{}")}catch(e){}
+let current=null,mode="signup",session=null;
+
+function saveAccounts(){
+  localStorage.setItem("wordquestAccounts",JSON.stringify(accounts));
+}
+function freshProgress(){
+  return {xp:0,mastered:[],review:[],seen:{},correct:0,total:0};
+}
+function switchAuth(){
+  mode=mode==="signup"?"login":"signup";
+  $("signupFields").classList.toggle("hidden",mode!=="signup");
+  $("loginFields").classList.toggle("hidden",mode!=="login");
+  $("authTitle").textContent=mode==="signup"?"Create your profile":"Sign in";
+  $("authButton").textContent=mode==="signup"?"Create profile & start":"Sign in";
+  $("switchText").textContent=mode==="signup"?"Already have an account?":"New here?";
+  $("authError").textContent="";
+}
+function submitAuth(){
+  let u=(mode==="signup"?$("username").value:$("loginUser").value).trim().toLowerCase();
+  let pass=mode==="signup"?$("password").value:$("loginPass").value;
+  if(mode==="signup"){
+    let name=$("name").value.trim();
+    if(!name||!u||!pass){$("authError").textContent="Fill in every field.";return}
+    if(u.length<3||pass.length<4){$("authError").textContent="Username needs 3+ characters and password 4+.";return}
+    if(accounts[u]){$("authError").textContent="Username already exists in this browser.";return}
+    accounts[u]={name,pass,progress:freshProgress()};
+    saveAccounts();
+    enter(u);
+  }else{
+    if(!accounts[u]||accounts[u].pass!==pass){
+      $("authError").textContent="Login details don't match a profile in this browser.";return;
+    }
+    enter(u);
+  }
+}
+function enter(u){
+  current=u;
+  $("auth").classList.add("hidden");
+  $("game").classList.remove("hidden");
+  $("profileName").textContent="👤 "+accounts[u].name;
+  $("hello").textContent=accounts[u].name;
+  updateDashboard();
+}
+function signOut(){
+  current=null;session=null;
+  $("game").classList.add("hidden");
+  $("auth").classList.remove("hidden");
+  $("profileName").textContent="";
+  mode="login";
+  $("signupFields").classList.add("hidden");
+  $("loginFields").classList.remove("hidden");
+  $("authTitle").textContent="Sign in";
+  $("authButton").textContent="Sign in";
+}
+function p(){return accounts[current].progress}
+function level(){return Math.min(10,1+Math.floor(p().xp/100))}
+function tier(){return level()<3?1:level()<6?2:3}
+function updateDashboard(){
+  if(!current)return;
+  $("level").textContent=level();
+  $("mastered").textContent=p().mastered.length;
+  $("xp").textContent=p().xp;
+  $("levelProgress").textContent=(p().xp%100)+" / 100 XP to next level";
+  $("progressBar").style.width=(p().xp%100)+"%";
+  $("reviewList").innerHTML=p().review.length?
+    p().review.map(w=>{let x=WORDS.find(a=>a[0]===w);return "<p><b>"+w+"</b> — "+x[1]+"</p>"}).join("")
+    :"No review words yet.";
+  saveAccounts();
+}
+function startGame(){
+  let eligible=WORDS.filter(w=>w[3]<=tier()&&!p().mastered.includes(w[0]));
+  let review=p().review.map(w=>WORDS.find(x=>x[0]===w)).filter(Boolean);
+  let queue=review.slice(0,3);
+  eligible=eligible.filter(w=>!queue.some(x=>x[0]===w[0]));
+  while(queue.length<10&&eligible.length){
+    queue.push(eligible.splice(Math.floor(Math.random()*eligible.length),1)[0]);
+  }
+  if(!queue.length)queue=WORDS.filter(w=>w[3]<=tier()).slice(0,10);
+  session={queue,at:0,correct:0,answered:false};
+  $("startScreen").classList.add("hidden");
+  $("finishScreen").classList.add("hidden");
+  $("questionScreen").classList.remove("hidden");
+  question();
+}
+function question(){
+  if(session.at>=session.queue.length){endGame();return}
+  let w=session.queue[session.at];
+  session.answered=false;
+  $("status").textContent="WORD "+(session.at+1)+" OF "+session.queue.length+" · LEVEL "+w[3];
+  $("word").textContent=w[0];
+  $("part").textContent="Vocabulary · Level "+w[3];
+  $("feedback").textContent="";
+  $("example").classList.add("hidden");
+  $("next").classList.add("hidden");
+  let choices=[w[1]];
+  let other=WORDS.filter(x=>x[0]!==w[0]);
+  while(choices.length<4&&other.length){
+    let i=Math.floor(Math.random()*other.length),x=other.splice(i,1)[0];
+    if(!choices.includes(x[1]))choices.push(x[1]);
+  }
+  choices.sort(()=>Math.random()-.5);
+  $("answers").innerHTML="";
+  choices.forEach(d=>{
+    let b=document.createElement("button");
+    b.className="answer";b.textContent=d;
+    b.onclick=()=>answer(b,d===w[1]);
+    $("answers").appendChild(b);
+  });
+}
+function answer(btn,correct){
+  if(session.answered)return;
+  session.answered=true;
+  let w=session.queue[session.at],q=p();
+  q.total++;q.seen[w[0]]=(q.seen[w[0]]||0)+1;
+  [...$("answers").children].forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===w[1])b.classList.add("correct");
+  });
+  if(correct){
+    session.correct++;q.correct++;
+    let gain=10+w[3]*5;q.xp+=gain;
+    if(!q.mastered.includes(w[0])&&
+      (q.seen[w[0]]>=2||Math.random()<.35)){
+      q.mastered.push(w[0]);
+      q.review=q.review.filter(x=>x!==w[0]);
+    }
+    $("feedback").textContent="Correct! +"+gain+" XP";
+    $("feedback").style.color="#168553";
+  }else{
+    if(!q.review.includes(w[0]))q.review.push(w[0]);
+    $("feedback").textContent="Not quite — review the meaning.";
+    $("feedback").style.color="#b33";
+  }
+  $("example").innerHTML="<b>Meaning:</b> "+w[1]+"<br><br><b>Example:</b> "+w[2];
+  $("example").classList.remove("hidden");
+  $("next").classList.remove("hidden");
+  updateDashboard();
+}
+function nextQuestion(){session.at++;question()}
+function endGame(){
+  if(!session)return;
+  $("questionScreen").classList.add("hidden");
+  $("finishScreen").classList.remove("hidden");
+  $("status").textContent="SESSION COMPLETE";
+  $("summary").textContent="You answered "+session.correct+" correctly. Keep practicing to master more words!";
+  session=null;updateDashboard();
 }
 </script>
-
 </body>
 </html>

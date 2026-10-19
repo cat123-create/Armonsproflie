@@ -4,201 +4,239 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WordQuest Vocabulary</title>
+<title>Student Dashboard</title>
 <style>
-body{margin:0;background:#f1f5ff;color:#192642;font-family:Arial,sans-serif}
-header{background:white;padding:18px;text-align:center;font-size:25px;font-weight:bold;color:#315fe8}
-main{max-width:700px;margin:25px auto;padding:15px}
-.card{background:white;padding:24px;border-radius:16px;margin-bottom:16px;box-shadow:0 3px 15px #0001}
-button{padding:13px 18px;border:0;border-radius:9px;background:#315fe8;color:white;font-weight:bold;cursor:pointer;margin:5px}
-button:hover{opacity:.85}
-input{padding:12px;border:1px solid #ccd4e4;border-radius:8px;width:90%;max-width:400px;margin:10px 0}
-.hidden{display:none!important}
-.word{font-size:42px;font-weight:bold;margin:20px 0}
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.answers button{background:#f0f4ff;color:#192642;border:1px solid #ccd4e4;min-height:60px}
-.answers button:disabled{opacity:1}
-.stats{display:flex;justify-content:space-around;gap:10px;text-align:center}
-.stats strong{font-size:24px;display:block}
-.muted{color:#68758c;line-height:1.5}
-.correct{background:#d9f8e5!important;border-color:#29965c!important}
-.wrong{background:#ffe1e1!important}
-#feedback{font-weight:bold;min-height:24px}
-@media(max-width:500px){.answers{grid-template-columns:1fr}.card{padding:17px}.word{font-size:34px}}
+:root {
+  --page:#202a36; --header:#151d27; --card:#252f3b;
+  --line:#3a4653; --text:#eef2f6; --muted:#b3becb;
+  --blue:#174f83; --link:#a9d3f6; --green:#7acb7b;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font:15px Arial,Helvetica,sans-serif}
+.topbar{
+  min-height:86px;padding:0 30px;display:flex;align-items:center;gap:28px;
+  background:var(--header);border-bottom:1px solid #303b48;
+  position:sticky;top:0;z-index:10
+}
+.brand{display:flex;align-items:center;gap:9px;color:#78c95b;font-size:30px;font-weight:700;letter-spacing:-.8px}
+.brand-mark{font-size:32px;transform:rotate(-25deg)}
+.greeting{font-size:22px;font-weight:700}
+.spacer{flex:1}
+.start{
+  display:flex;align-items:center;justify-content:center;gap:18px;min-width:220px;
+  padding:15px 23px;color:white;background:var(--blue);border:1px solid #276296;
+  border-radius:8px;font-size:17px;font-weight:700;cursor:pointer
+}
+.start:hover,.small:hover{background:#1d609d}
+.profile{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#344355;color:#e3edf7}
+main{max-width:1440px;margin:0 auto;padding:27px 32px 48px}
+.intro{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:22px}
+h1{font-size:25px;margin:0 0 7px;font-weight:700}
+.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.date{color:#aab7c5;font-size:13px}
+.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:18px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;min-width:0}
+.head{display:flex;align-items:center;gap:11px;padding:17px 19px;border-bottom:1px solid var(--line);font-size:18px;font-weight:700}
+.headicon{color:#a9ccec}
+.link{color:var(--link);font-size:13px;text-decoration:none;margin-left:auto;font-weight:400}
+.link:hover,.foot a:hover{text-decoration:underline}
+.body{padding:4px 19px 12px}
+.task{display:flex;align-items:center;gap:13px;padding:17px 0;border-bottom:1px solid #394552}
+.task:last-child{border-bottom:0}
+.symbol{width:39px;height:39px;flex:0 0 39px;display:grid;place-items:center;border-radius:7px;background:#304153;color:#c6def4;font-size:18px}
+.copy{flex:1;min-width:0}
+.title{font-size:15px;font-weight:700;margin-bottom:5px}
+.desc{color:var(--muted);font-size:13px;line-height:1.4}
+.status{color:#a9c9e7;font-size:12px;white-space:nowrap}
+.arrow{color:#aebdca;font-size:22px}
+.summary{padding:17px 0;border-bottom:1px solid #394552}
+.summaryrow{display:flex;align-items:center;gap:15px}
+.summaryinfo{flex:1}
+.label{color:var(--muted);font-size:13px;margin-bottom:6px}
+.summarytitle{font-size:19px;font-weight:700;margin-bottom:5px}
+.small{background:var(--blue);border:1px solid #276296;color:white;border-radius:6px;padding:10px 13px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.subhead{margin:16px 0 6px;font-size:13px;color:#d7e0e9;font-weight:700}
+.session{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #394552}
+.session:last-child{border-bottom:0}
+.sessionname{font-size:14px;font-weight:600;margin-bottom:4px}
+.check{color:var(--green);font-size:17px}
+.classentry{display:flex;align-items:center;gap:13px;padding:17px 0;border-bottom:1px solid #394552}
+.classsymbol{width:42px;height:42px;border-radius:7px;display:grid;place-items:center;background:#3b365e;color:#d3caff;font-size:18px}
+.goal{padding:17px 0 9px}
+.goaltop{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin-bottom:10px}
+.goaltop span:last-child{color:var(--muted)}
+.track{height:9px;background:#414d5a;border-radius:20px;overflow:hidden}
+.fill{height:100%;width:60%;background:var(--green);border-radius:20px}
+.level{padding:15px 0;border-bottom:1px solid #394552}
+.level:last-child{border-bottom:0}
+.leveltop{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px;font-size:13px}
+.leveltop span:first-child{font-weight:600}
+.leveltop span:last-child{color:var(--muted)}
+.leveltrack{height:6px;border-radius:20px;background:#414d5a;overflow:hidden}
+.levelfill{height:100%;border-radius:inherit;background:#75a9d6}
+.foot{padding:12px 0 5px}
+.foot a{color:var(--link);text-decoration:none;font-size:13px}
+.lower-note{margin-top:18px;padding:18px 20px;background:#222c37;border:1px solid var(--line);border-radius:8px}
+.lower-note h2{margin:0 0 8px;font-size:17px}
+@media(max-width:800px){
+  .grid{grid-template-columns:1fr}
+  main{padding:22px 18px 35px}
+  .brand{font-size:25px}
+  .topbar{gap:17px;padding:0 18px}
+  .start{min-width:175px}
+}
+@media(max-width:560px){
+  .topbar{padding:14px;gap:12px;flex-wrap:wrap}
+  .brand{font-size:23px}
+  .brand-mark{font-size:26px}
+  .greeting{font-size:18px}
+  .spacer{flex-basis:100%}
+  .start{flex:1}
+  .profile{margin-left:auto}
+  main{padding:16px 12px 30px}
+  .intro{align-items:flex-start;flex-direction:column}
+  .date{display:none}
+  .summaryrow{align-items:flex-start;flex-direction:column}
+  .task{gap:10px}
+  .status{display:none}
+}
 </style>
 </head>
 <body>
-<header>✦ WordQuest</header>
-<main>
-<section id="welcome" class="card">
-<h1>Learn new words!</h1>
-<p class="muted">Start easy, earn XP, and unlock harder vocabulary.</p>
-<label for="player">What is your name?</label><br>
-<input id="player" placeholder="Enter your name" maxlength="30">
-<br><button id="begin">Start learning →</button>
-<p id="message" class="muted"></p>
-</section>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">❧</span><span>membean</span></div>
+  <div class="greeting">Hi, Alex</div>
+  <div class="spacer"></div>
+  <button class="start" onclick="openMembean()">Start Practice <span>→</span></button>
+  <div class="profile" title="Profile">●</div>
+</header>
 
-<section id="home" class="card hidden">
-<h1>Welcome, <span id="name"></span>!</h1>
-<div class="stats">
-<div>Level<strong id="level">1</strong></div>
-<div>Words learned<strong id="learned">0</strong></div>
-<div>XP<strong id="xp">0</strong></div>
-</div>
-<p class="muted" id="progress"></p>
-<button id="play">▶ Play</button>
-<button id="rename">Change name</button>
-<button id="reset">Reset progress</button>
-</section>
+<main id="top">
+  <div class="intro">
+    <div>
+      <h1>Hi, Alex!</h1>
+      <div class="muted">Here’s an overview of your learning.</div>
+    </div>
+    <div class="date">Student dashboard</div>
+  </div>
 
-<section id="quiz" class="card hidden" style="text-align:center">
-<p id="number" class="muted"></p>
-<div id="word" class="word"></div>
-<p>What does this word mean?</p>
-<div id="answers" class="answers"></div>
-<p id="feedback"></p>
-<p id="example" class="muted"></p>
-<button id="next" class="hidden">Next word →</button>
-<button id="finish">Finish session</button>
-</section>
+  <div class="grid">
+    <section class="card" id="todo">
+      <div class="head"><span class="headicon">☷</span>To Do List</div>
+      <div class="body">
+        <div class="task">
+          <div class="symbol">▤</div>
+          <div class="copy">
+            <div class="title">Training</div>
+            <div class="desc">Complete your assigned practice</div>
+          </div>
+          <span class="status">To do</span><span class="arrow">›</span>
+        </div>
+        <div class="task">
+          <div class="symbol">✓</div>
+          <div class="copy">
+            <div class="title">Vocabulary assignment</div>
+            <div class="desc">Review the words assigned by your teacher</div>
+          </div>
+          <span class="arrow">›</span>
+        </div>
+        <div class="task">
+          <div class="symbol">▧</div>
+          <div class="copy">
+            <div class="title">Upcoming work</div>
+            <div class="desc">Check for quizzes and writing assignments</div>
+          </div>
+          <span class="arrow">›</span>
+        </div>
+      </div>
+    </section>
 
-<section id="done" class="card hidden" style="text-align:center">
-<h1>Great job! 🎉</h1>
-<p id="summary" class="muted"></p>
-<button id="again">Play again</button>
-<button id="back">Home</button>
-</section>
+    <section class="card" id="training">
+      <div class="head">
+        <span class="headicon">◉</span>Your Training
+        <a class="link" href="#training">View history →</a>
+      </div>
+      <div class="body">
+        <div class="summary">
+          <div class="summaryrow">
+            <div class="summaryinfo">
+              <div class="label">Next training session</div>
+              <div class="summarytitle">Ready when you are</div>
+              <div class="desc">Practice at your own pace</div>
+            </div>
+            <button class="small" onclick="openMembean()">Start Training →</button>
+          </div>
+        </div>
+        <div class="subhead">Recent Sessions</div>
+        <div class="session">
+          <div>
+            <div class="sessionname">Recent session</div>
+            <div class="muted">Your latest training activity</div>
+          </div>
+          <span class="check">✓</span>
+        </div>
+        <div class="session">
+          <div>
+            <div class="sessionname">Session history</div>
+            <div class="muted">Review your previous practice</div>
+          </div>
+          <span class="arrow">›</span>
+        </div>
+      </div>
+    </section>
 
-<section id="review" class="card hidden">
-<h2>📚 Review these words</h2>
-<div id="reviewWords" class="muted">No words to review yet.</div>
-</section>
+    <section class="card" id="classes">
+      <div class="head"><span class="headicon">▦</span>Your Classes</div>
+      <div class="body">
+        <div class="classentry">
+          <div class="classsymbol">▤</div>
+          <div class="copy">
+            <div class="title">Class progress</div>
+            <div class="desc">See your assigned training expectations</div>
+          </div>
+          <a class="link" href="#classes">Details →</a>
+        </div>
+        <div class="goal">
+          <div class="goaltop">
+            <span>Weekly training goal</span>
+            <span>Example progress</span>
+          </div>
+          <div class="track"><div class="fill"></div></div>
+          <div class="desc" style="margin-top:9px">Progress shown here is sample information.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="words">
+      <div class="head"><span class="headicon">▤</span>Words</div>
+      <div class="body">
+        <div class="level">
+          <div class="leveltop"><span>Words in Play</span><span>Vocabulary practice</span></div>
+          <div class="leveltrack"><div class="levelfill" style="width:68%"></div></div>
+        </div>
+        <div class="level">
+          <div class="leveltop"><span>Words Growing Stronger</span><span>Building familiarity</span></div>
+          <div class="leveltrack"><div class="levelfill" style="width:46%"></div></div>
+        </div>
+        <div class="level">
+          <div class="leveltop"><span>Current Level</span><span>View your level</span></div>
+          <div class="leveltrack"><div class="levelfill" style="width:32%"></div></div>
+        </div>
+        <div class="foot"><a href="#words">View My Words →</a></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="lower-note" id="settings">
+    <h2>More student information</h2>
+    <div class="muted">Scroll down to see more content. This area is a placeholder for additional dashboard details.</div>
+  </section>
 </main>
+
 <script>
-(function(){
-"use strict";
-const words=[
-["happy","feeling pleased or glad","She was happy to see her friend.",1],
-["tiny","very small","A tiny bird sat on the fence.",1],
-["calm","peaceful and not upset","He stayed calm during the storm.",1],
-["rapid","happening very quickly","The rapid runner won the race.",1],
-["assist","to help someone","I will assist you with your homework.",1],
-["ancient","very old","They visited an ancient castle.",1],
-["observe","to watch carefully","Scientists observe the stars.",1],
-["fragile","easily broken","The fragile glass needs care.",1],
-["fortunate","having good luck","We were fortunate to find a seat.",1],
-["reluctant","unwilling or hesitant","She was reluctant to speak.",2],
-["abundant","existing in large quantities","The forest has abundant wildlife.",2],
-["infer","to reach a conclusion from clues","We can infer the answer from the evidence.",2],
-["precise","exact and accurate","Please give a precise measurement.",2],
-["diligent","careful and hardworking","The diligent student studied every day.",2],
-["inevitable","certain to happen","Change is inevitable.",2],
-["resilient","able to recover after difficulty","The resilient team kept trying.",2],
-["ambiguous","having more than one possible meaning","The ambiguous clue confused us.",3],
-["meticulous","extremely careful about details","She kept meticulous notes.",3],
-["pragmatic","focused on practical solutions","They chose a pragmatic solution.",3],
-["ubiquitous","found almost everywhere","Phones are ubiquitous in many cities.",3],
-["ephemeral","lasting for a short time","The rainbow was ephemeral.",3],
-["eloquent","fluent and persuasive in speaking","His eloquent speech inspired us.",3],
-["scrutinize","to examine very closely","Reviewers scrutinize each detail.",3],
-["benevolent","kind and generous","The benevolent neighbor helped everyone.",3],
-["conundrum","a difficult problem or puzzle","The puzzle was a conundrum.",3],
-["mitigate","to make something less severe","Trees can mitigate heat.",3],
-["arduous","requiring great effort","The arduous climb took all day.",3]
-];
-const $=id=>document.getElementById(id);
-const key="wordquest_pasteable_v2";
-let data={name:"",xp:0,learned:[],review:[],seen:{}},session=null;
-try{const old=JSON.parse(localStorage.getItem(key)||"null");if(old&&typeof old==="object")data=Object.assign(data,old)}catch(e){}
-function save(){try{localStorage.setItem(key,JSON.stringify(data))}catch(e){}}
-function level(){return Math.min(10,1+Math.floor(data.xp/100))}
-function difficulty(){return level()<3?1:level()<6?2:3}
-function show(id){["welcome","home","quiz","done","review"].forEach(x=>$(x).classList.toggle("hidden",x!==id))}
-function dashboard(){
- $("name").textContent=data.name;
- $("level").textContent=level();
- $("learned").textContent=data.learned.length;
- $("xp").textContent=data.xp;
- $("progress").textContent=(data.xp%100)+" / 100 XP to the next level";
- const box=$("reviewWords");box.replaceChildren();
- if(!data.review.length)box.textContent="No words to review yet.";
- data.review.forEach(w=>{
-  const item=words.find(x=>x[0]===w);if(!item)return;
-  const p=document.createElement("p");p.textContent=item[0]+": "+item[1];box.appendChild(p);
- });
- save();
+function openMembean() {
+  window.open("https://membean.com/", "_blank", "noopener");
 }
-function start(){
- const pool=words.filter(w=>w[3]<=difficulty()&&!data.learned.includes(w[0]));
- const queue=[];
- data.review.forEach(w=>{const item=words.find(x=>x[0]===w);if(item&&queue.length<3&&!queue.includes(item))queue.push(item)});
- const rest=pool.filter(w=>!queue.includes(w));
- while(queue.length<10&&rest.length){queue.push(rest.splice(Math.floor(Math.random()*rest.length),1)[0])}
- if(!queue.length)words.filter(w=>w[3]<=difficulty()).sort(()=>Math.random()-.5).slice(0,10).forEach(w=>queue.push(w));
- session={queue:queue,index:0,correct:0,locked:false};
- show("quiz");ask();
-}
-function ask(){
- if(session.index>=session.queue.length){finish();return}
- const item=session.queue[session.index];session.locked=false;
- $("number").textContent="QUESTION "+(session.index+1)+" OF "+session.queue.length+" · LEVEL "+item[3];
- $("word").textContent=item[0];$("feedback").textContent="";$("example").textContent="";
- $("next").classList.add("hidden");
- const choices=[item[1]],pool=words.filter(w=>w[0]!==item[0]);
- while(choices.length<4&&pool.length){
-  const i=Math.floor(Math.random()*pool.length),m=pool.splice(i,1)[0][1];
-  if(!choices.includes(m))choices.push(m);
- }
- choices.sort(()=>Math.random()-.5);
- const box=$("answers");box.replaceChildren();
- choices.forEach(choice=>{
-  const b=document.createElement("button");b.textContent=choice;
-  b.addEventListener("click",()=>answer(b,choice===item[1]));box.appendChild(b);
- });
-}
-function answer(button,correct){
- if(session.locked)return;session.locked=true;
- const item=session.queue[session.index];
- Object.keys(data.seen).includes(item[0])?data.seen[item[0]]++:data.seen[item[0]]=1;
- [...$("answers").children].forEach(b=>{b.disabled=true;if(b.textContent===item[1])b.classList.add("correct")});
- if(correct){
-  session.correct++;data.xp+=10+item[3]*5;
-  $("feedback").textContent="Correct! +"+(10+item[3]*5)+" XP";$("feedback").style.color="#168553";
-  if(!data.learned.includes(item[0])&&(data.seen[item[0]]>=2||Math.random()<.35)){
-   data.learned.push(item[0]);data.review=data.review.filter(w=>w!==item[0]);
-  }
- }else{
-  button.classList.add("wrong");if(!data.review.includes(item[0]))data.review.push(item[0]);
-  $("feedback").textContent="Not quite! The correct answer is highlighted."; $("feedback").style.color="#b52e36";
- }
- $("example").textContent="Example: "+item[2];
- $("next").classList.remove("hidden");dashboard();
-}
-function finish(){
- const correct=session?session.correct:0,total=session?session.queue.length:0;session=null;
- $("summary").textContent="You answered "+correct+" out of "+total+" questions correctly. Keep practicing to unlock harder words!";
- dashboard();show("done");
-}
-$("begin").addEventListener("click",()=>{
- const name=$("player").value.trim();
- if(!name){$("message").textContent="Please enter your name first.";return}
- data.name=name;dashboard();show("home");
-});
-$("player").addEventListener("keydown",e=>{if(e.key==="Enter")$("begin").click()});
-$("play").addEventListener("click",start);
-$("again").addEventListener("click",start);
-$("back").addEventListener("click",()=>{dashboard();show("home")});
-$("next").addEventListener("click",()=>{session.index++;ask()});
-$("finish").addEventListener("click",finish);
-$("rename").addEventListener("click",()=>{show("welcome");$("player").value=data.name});
-$("reset").addEventListener("click",()=>{
- if(confirm("Reset your saved progress?")){
-  data={name:data.name,xp:0,learned:[],review:[],seen:{}};dashboard();show("home");
- }
-});
-if(data.name){$("player").value=data.name;$("message").textContent="Welcome back, "+data.name+". Your saved progress is ready."; $("begin").textContent="Continue →";}
-})();
 </script>
 </body>
 </html>
